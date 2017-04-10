@@ -9,7 +9,9 @@ import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.DeploymentBuilder;
+import org.activiti.engine.repository.NativeProcessDefinitionQuery;
 import org.activiti.engine.repository.ProcessDefinition;
+import org.activiti.engine.repository.ProcessDefinitionQuery;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.activiti.engine.task.TaskQuery;
@@ -96,4 +98,46 @@ public class DeployFlow {
 			 * 查询和删除流程
 			 * description:查询流程定义
 			 */
+			@Test
+			public  void  findProcessDefintion(){
+				RepositoryService  repositoryService = processEngine.getRepositoryService();
+				ProcessDefinitionQuery processDefinitionQuery = repositoryService.createProcessDefinitionQuery();
+				/**
+				 * 添加查询条件
+				 */
+				//processDefinitionQuery.deploymentId("");//使用部署对象ID进行查询
+			//	processDefinitionQuery.processDefinitionId("");//使用流程ID进行查询
+			//	processDefinitionQuery.processDefinitionKey("");//使用流程定义的Key进行查询
+			//	processDefinitionQuery.processDefinitionKeyLike("");//使用流程定义的key的模糊查询
+				processDefinitionQuery.processDefinitionName("companyLeaderName");//使用流程定义的名称查询
+				/**
+				 * 查询排序
+				 */
+				processDefinitionQuery.orderByDeploymentId();//按照发布的ID进行查询
+				processDefinitionQuery.orderByProcessDefinitionVersion();//按照版本进行查询
+				processDefinitionQuery.desc();//降序排序
+				
+				List<ProcessDefinition> list = processDefinitionQuery.list();
+//				ProcessDefinition  processDefinition = processDefinitionQuery.singleResult();//获取唯一结果集
+//				long  count  = processDefinitionQuery.count();  //返回结果数量
+//				List<ProcessDefinition> list2 = processDefinitionQuery.listPage(0, 10);//分页查询
+				if(list!=null&&list.size()>0){
+					for(ProcessDefinition  processDefinition:list){
+						System.out.println("获取流程ID"+processDefinition.getId());
+						System.out.println("获取流程名称"+processDefinition.getName());
+						System.out.println("获取流程版本"+processDefinition.getVersion());
+						System.out.println("获取流程key"+processDefinition.getKey());
+						System.out.println("获取流程名称"+processDefinition.getName());
+						System.out.println("获取流程bpmn文件"+processDefinition.getResourceName());
+						System.out.println("获取流程png文件"+processDefinition.getDescription());
+						System.out.println("获取流程部署ID"+processDefinition.getDeploymentId());
+						
+						
+					}
+				}
+				
+				
+				
+				
+			}
 }
