@@ -7,7 +7,7 @@ import org.junit.Test;
 public class CreateTable {
 	
 	/****
-	 * ´´½¨Á÷³Ì±í
+	 * åˆ›å»ºactivitiçš„æ•°æ®åº“è¡¨
 	 * */
 	@Test
 	public void createTable() {

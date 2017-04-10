@@ -9,7 +9,6 @@ import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.DeploymentBuilder;
-import org.activiti.engine.repository.NativeProcessDefinitionQuery;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.repository.ProcessDefinitionQuery;
 import org.activiti.engine.runtime.ProcessInstance;
@@ -22,17 +21,18 @@ public class DeployFlow {
 	ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
 	
 	
+
 	/**
-	 * helloWord £¬Á÷³Ì¶¨Òå²¿Êğ
-	 * description:½«helloWordÁ÷³Ì¶¨Òå²¿Êğµ½Êı¾İ¿â
+	 * helloWord ï¼Œæµç¨‹å®šä¹‰éƒ¨ç½²
+	 * description:å°†helloWordæµç¨‹å®šä¹‰éƒ¨ç½²åˆ°æ•°æ®åº“
 	 */
 	@Test
 	public void deployHelloWord() {
 		
-		RepositoryService repositoryService = processEngine.getRepositoryService(); // ´´½¨²Ö¿â·şÎñ¶ÔÏó
+		RepositoryService repositoryService = processEngine.getRepositoryService(); // åˆ›å»ºä»“åº“æœåŠ¡å¯¹è±¡
 
-		DeploymentBuilder deploymentBuilder = repositoryService.createDeployment(); // µÃµ½·¢²¼¹¹ÔìÆ÷
-		deploymentBuilder.name("helloWordÈëÃÅ³ÌĞò");
+		DeploymentBuilder deploymentBuilder = repositoryService.createDeployment(); // å¾—åˆ°å‘å¸ƒæ„é€ å™¨
+		deploymentBuilder.name("helloWordå…¥é—¨ç¨‹åº");
 		deploymentBuilder.addClasspathResource("diagrams/HelloWorld.bpmn");
 		deploymentBuilder.addClasspathResource("diagrams/HelloWorld.png");
 		Deployment deployment = deploymentBuilder.deploy();
@@ -44,7 +44,7 @@ public class DeployFlow {
 	
 	
 	/**
-	 * Æô¶¯helloWord¶¨ÒåÁ÷³Ì
+	 * å¯åŠ¨helloWordå®šä¹‰æµç¨‹
 	 */
 	@Test
 	public  void runFlowHelloWord(){
@@ -61,83 +61,102 @@ public class DeployFlow {
 	
 	
 	/**
-	 * ²éÑ¯µ±Ç°ÈËµÄÈÎÎñ
+	 * æŸ¥è¯¢å½“å‰äººçš„ä»»åŠ¡
 	 */
 	
 	@Test
 	public void findPersonTask(){
-		String engine="²¿ÃÅ¾­Àí";
+		String engine="éƒ¨é—¨ç»ç†";
 		TaskService taskService= processEngine.getTaskService();
 		TaskQuery  taskQuery= taskService.createTaskQuery();
 		taskQuery.taskAssignee(engine);
 		
 		List<Task> Tasklist = taskQuery.list();
 		for(Task list:Tasklist){
-			System.out.println("1´ú°ìÈÎÎñID:"+list.getId()+" ");
-			System.out.println("2´ú°ìÈÎÎñÃû³Æ:"+list.getName()+" ");
-			System.out.println("3´ú°ìÈÎÎñ´´½¨Ê±¼ä:"+list.getCreateTime()+" ");
-			System.out.println("4´ú°ìÈÎÎñ°ìÀíÈË:"+list.getAssignee()+" ");
-			System.out.println("5Á÷³ÌÊµÀıID:"+list.getProcessInstanceId()+" ");
-			System.out.println("6Ö´ĞĞ¶ÔÏóID:"+list.getExecutionId()+" ");
-			System.out.println("7Á÷³Ì¶¨ÒåID:"+list.getProcessDefinitionId()+" ");
+			System.out.println("1ä»£åŠä»»åŠ¡ID:"+list.getId()+" ");
+			System.out.println("2ä»£åŠä»»åŠ¡åç§°:"+list.getName()+" ");
+			System.out.println("3ä»£åŠä»»åŠ¡åˆ›å»ºæ—¶é—´:"+list.getCreateTime()+" ");
+			System.out.println("4ä»£åŠä»»åŠ¡åŠç†äºº:"+list.getAssignee()+" ");
+			System.out.println("5æµç¨‹å®ä¾‹ID:"+list.getProcessInstanceId()+" ");
+			System.out.println("6æ‰§è¡Œå¯¹è±¡ID:"+list.getExecutionId()+" ");
+			System.out.println("7æµç¨‹å®šä¹‰ID:"+list.getProcessDefinitionId()+" ");
 		}
 	}
 			/**
-			 * Íê³É´ú°ìÀíÈÎÎñ
+			 * å®Œæˆä»£åŠç†ä»»åŠ¡
 			 */
 			@Test
 		public  void completeTask(){
-			String taskID="5008";
+			String taskID="2504";
 			TaskService taskService = processEngine.getTaskService();
 			taskService.complete(taskID);
-			System.out.println("³É³É´´½¨ÈÎÎñID"+taskID);
+			System.out.println("æˆæˆåˆ›å»ºä»»åŠ¡ID"+taskID);
 		}
 			
 			
 			/**
-			 * ²éÑ¯ºÍÉ¾³ıÁ÷³Ì
-			 * description:²éÑ¯Á÷³Ì¶¨Òå
+			 * æŸ¥è¯¢å’Œåˆ é™¤æµç¨‹
+			 * description:æŸ¥è¯¢æµç¨‹å®šä¹‰
 			 */
 			@Test
 			public  void  findProcessDefintion(){
 				RepositoryService  repositoryService = processEngine.getRepositoryService();
 				ProcessDefinitionQuery processDefinitionQuery = repositoryService.createProcessDefinitionQuery();
 				/**
-				 * Ìí¼Ó²éÑ¯Ìõ¼ş
+				 * æ·»åŠ æŸ¥è¯¢æ¡ä»¶
 				 */
-				//processDefinitionQuery.deploymentId("");//Ê¹ÓÃ²¿Êğ¶ÔÏóID½øĞĞ²éÑ¯
-			//	processDefinitionQuery.processDefinitionId("");//Ê¹ÓÃÁ÷³ÌID½øĞĞ²éÑ¯
-			//	processDefinitionQuery.processDefinitionKey("");//Ê¹ÓÃÁ÷³Ì¶¨ÒåµÄKey½øĞĞ²éÑ¯
-			//	processDefinitionQuery.processDefinitionKeyLike("");//Ê¹ÓÃÁ÷³Ì¶¨ÒåµÄkeyµÄÄ£ºı²éÑ¯
-				processDefinitionQuery.processDefinitionName("companyLeaderName");//Ê¹ÓÃÁ÷³Ì¶¨ÒåµÄÃû³Æ²éÑ¯
+			//processDefinitionQuery.deploymentId("");//ä½¿ç”¨éƒ¨ç½²å¯¹è±¡IDè¿›è¡ŒæŸ¥è¯¢
+			//	processDefinitionQuery.processDefinitionId("");//ä½¿ç”¨æµç¨‹IDè¿›è¡ŒæŸ¥è¯¢
+			//	processDefinitionQuery.processDefinitionKey("");//ä½¿ç”¨æµç¨‹å®šä¹‰çš„Keyè¿›è¡ŒæŸ¥è¯¢
+			//	processDefinitionQuery.processDefinitionKeyLike("");//ä½¿ç”¨æµç¨‹å®šä¹‰çš„keyçš„æ¨¡ç³ŠæŸ¥è¯¢
+				processDefinitionQuery.processDefinitionName("companyLeaderName");//ä½¿ç”¨æµç¨‹å®šä¹‰çš„åç§°æŸ¥è¯¢
 				/**
-				 * ²éÑ¯ÅÅĞò
+				 * æŸ¥è¯¢æ’åº
 				 */
-				processDefinitionQuery.orderByDeploymentId();//°´ÕÕ·¢²¼µÄID½øĞĞ²éÑ¯
-				processDefinitionQuery.orderByProcessDefinitionVersion();//°´ÕÕ°æ±¾½øĞĞ²éÑ¯
-				processDefinitionQuery.desc();//½µĞòÅÅĞò
+				processDefinitionQuery.orderByDeploymentId();//æŒ‰ç…§å‘å¸ƒçš„IDè¿›è¡ŒæŸ¥è¯¢
+				processDefinitionQuery.orderByProcessDefinitionVersion();//æŒ‰ç…§ç‰ˆæœ¬è¿›è¡ŒæŸ¥è¯¢
+				processDefinitionQuery.desc();//é™åºæ’åº
 				
 				List<ProcessDefinition> list = processDefinitionQuery.list();
-//				ProcessDefinition  processDefinition = processDefinitionQuery.singleResult();//»ñÈ¡Î¨Ò»½á¹û¼¯
-//				long  count  = processDefinitionQuery.count();  //·µ»Ø½á¹ûÊıÁ¿
-//				List<ProcessDefinition> list2 = processDefinitionQuery.listPage(0, 10);//·ÖÒ³²éÑ¯
+//				ProcessDefinition  processDefinition = processDefinitionQuery.singleResult();//è·å–å”¯ä¸€ç»“æœé›†
+//				long  count  = processDefinitionQuery.count();  //è¿”å›ç»“æœæ•°é‡
+//				List<ProcessDefinition> list2 = processDefinitionQuery.listPage(0, 10);//åˆ†é¡µæŸ¥è¯¢
 				if(list!=null&&list.size()>0){
 					for(ProcessDefinition  processDefinition:list){
-						System.out.println("»ñÈ¡Á÷³ÌID"+processDefinition.getId());
-						System.out.println("»ñÈ¡Á÷³ÌÃû³Æ"+processDefinition.getName());
-						System.out.println("»ñÈ¡Á÷³Ì°æ±¾"+processDefinition.getVersion());
-						System.out.println("»ñÈ¡Á÷³Ìkey"+processDefinition.getKey());
-						System.out.println("»ñÈ¡Á÷³ÌÃû³Æ"+processDefinition.getName());
-						System.out.println("»ñÈ¡Á÷³ÌbpmnÎÄ¼ş"+processDefinition.getResourceName());
-						System.out.println("»ñÈ¡Á÷³ÌpngÎÄ¼ş"+processDefinition.getDescription());
-						System.out.println("»ñÈ¡Á÷³Ì²¿ÊğID"+processDefinition.getDeploymentId());
-						
-						
+						System.out.println("è·å–æµç¨‹ID"+processDefinition.getId());
+						System.out.println("è·å–æµç¨‹åç§°"+processDefinition.getName());
+						System.out.println("è·å–æµç¨‹ç‰ˆæœ¬"+processDefinition.getVersion());
+						System.out.println("è·å–æµç¨‹key"+processDefinition.getKey());
+						System.out.println("è·å–æµç¨‹åç§°"+processDefinition.getName());
+						System.out.println("è·å–æµç¨‹bpmnæ–‡ä»¶"+processDefinition.getResourceName());
+						System.out.println("è·å–æµç¨‹pngæ–‡ä»¶"+processDefinition.getDescription());
+						System.out.println("è·å–æµç¨‹éƒ¨ç½²ID"+processDefinition.getDeploymentId());
 					}
 				}
-				
-				
-				
-				
 			}
+			
+			/**
+			 * åˆ é™¤æµç¨‹èŠ‚ç‚¹
+			 */
+			@Test
+			public  void  deleteProcessDefintion(){
+				RepositoryService  repositoryService = processEngine.getRepositoryService();
+				RuntimeService runtimeService = processEngine.getRuntimeService();
+				//åˆ é™¤æµç¨‹èŠ‚ç‚¹
+				//repositoryService.activateProcessDefinitionById("");//æ ¹æ®IDè¿›è¡Œåˆ é™¤
+				/**
+				 * åªèƒ½åˆ é™¤æ²¡æœ‰å¯åŠ¨çš„æµç¨‹ï¼Œå¦‚æœæµç¨‹å·²ç»å¯åŠ¨ï¼Œå°±ä¼šæŠ¥é”™ï¼
+				 */
+				repositoryService.deleteDeployment("companyLeaderkey:1:4");
+				
+				/**
+				 * åˆ é™¤æµç¨‹å®šä¹‰ï¼ŒåŒ…æ‹¬å¯åŠ¨çš„æµç¨‹
+				 */
+				repositoryService.deleteDeployment("", true);
+				System.out.println("åˆ é™¤æˆåŠŸï¼");
+
+			}
+			
+
+			
 }
