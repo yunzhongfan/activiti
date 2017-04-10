@@ -105,11 +105,7 @@ public class DeployFlow {
 				/**
 				 * 添加查询条件
 				 */
-<<<<<<< HEAD
-				//processDefinitionQuery.deploymentId("");//使用部署对象ID进行查询
-=======
 			//processDefinitionQuery.deploymentId("");//使用部署对象ID进行查询
->>>>>>> refs/remotes/origin/master
 			//	processDefinitionQuery.processDefinitionId("");//使用流程ID进行查询
 			//	processDefinitionQuery.processDefinitionKey("");//使用流程定义的Key进行查询
 			//	processDefinitionQuery.processDefinitionKeyLike("");//使用流程定义的key的模糊查询
@@ -135,11 +131,7 @@ public class DeployFlow {
 						System.out.println("获取流程bpmn文件"+processDefinition.getResourceName());
 						System.out.println("获取流程png文件"+processDefinition.getDescription());
 						System.out.println("获取流程部署ID"+processDefinition.getDeploymentId());
-<<<<<<< HEAD
-						
-						
-=======
->>>>>>> refs/remotes/origin/master
+
 					}
 				}
 			}
