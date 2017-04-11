@@ -131,6 +131,7 @@ public class DeployFlow {
 						System.out.println("获取流程bpmn文件"+processDefinition.getResourceName());
 						System.out.println("获取流程png文件"+processDefinition.getDescription());
 						System.out.println("获取流程部署ID"+processDefinition.getDeploymentId());
+
 					}
 				}
 			}
