@@ -16,6 +16,12 @@ import org.activiti.engine.task.Task;
 import org.activiti.engine.task.TaskQuery;
 import org.junit.Test;
 
+
+/**
+ * 流程的部署、启动、查询、完成、查询和删除流程定义
+ * @author Administrator
+ *
+ */
 public class DeployFlow {
 
 	ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
@@ -49,7 +55,7 @@ public class DeployFlow {
 	@Test
 	public  void runFlowHelloWord(){
 		RuntimeService runtimeService = processEngine.getRuntimeService();
-		ProcessInstance  processInstance = runtimeService.startProcessInstanceByKey("companyLeaderkey");
+		ProcessInstance  processInstance = runtimeService.startProcessInstanceByKey("helloWordkey");
 		System.out.println(processInstance.getId());
 		System.out.println(processInstance.getName());
 		
@@ -66,7 +72,7 @@ public class DeployFlow {
 	
 	@Test
 	public void findPersonTask(){
-		String engine="部门经理";
+		String engine="张三";
 		TaskService taskService= processEngine.getTaskService();
 		TaskQuery  taskQuery= taskService.createTaskQuery();
 		taskQuery.taskAssignee(engine);
@@ -87,7 +93,7 @@ public class DeployFlow {
 			 */
 			@Test
 		public  void completeTask(){
-			String taskID="2504";
+			String taskID="5011";
 			TaskService taskService = processEngine.getTaskService();
 			taskService.complete(taskID);
 			System.out.println("成成创建任务ID"+taskID);
@@ -109,7 +115,7 @@ public class DeployFlow {
 			//	processDefinitionQuery.processDefinitionId("");//使用流程ID进行查询
 			//	processDefinitionQuery.processDefinitionKey("");//使用流程定义的Key进行查询
 			//	processDefinitionQuery.processDefinitionKeyLike("");//使用流程定义的key的模糊查询
-				processDefinitionQuery.processDefinitionName("companyLeaderName");//使用流程定义的名称查询
+				processDefinitionQuery.processDefinitionName("helloWordName");//使用流程定义的名称查询
 				/**
 				 * 查询排序
 				 */
@@ -129,7 +135,7 @@ public class DeployFlow {
 						System.out.println("获取流程key"+processDefinition.getKey());
 						System.out.println("获取流程名称"+processDefinition.getName());
 						System.out.println("获取流程bpmn文件"+processDefinition.getResourceName());
-						System.out.println("获取流程png文件"+processDefinition.getDescription());
+						System.out.println("获取流程png文件"+processDefinition.getDiagramResourceName());
 						System.out.println("获取流程部署ID"+processDefinition.getDeploymentId());
 
 					}
@@ -148,12 +154,12 @@ public class DeployFlow {
 				/**
 				 * 只能删除没有启动的流程，如果流程已经启动，就会报错！
 				 */
-				repositoryService.deleteDeployment("companyLeaderkey:1:4");
+				repositoryService.deleteDeployment("5001");//删除的为流程部署表的主键ID_
 				
 				/**
 				 * 删除流程定义，包括启动的流程
-				 */
-				repositoryService.deleteDeployment("", true);
+				 *//*
+				repositoryService.deleteDeployment("", true);*/
 				System.out.println("删除成功！");
 
 			}
