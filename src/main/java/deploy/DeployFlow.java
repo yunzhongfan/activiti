@@ -68,11 +68,13 @@ public class DeployFlow {
 	
 	/**
 	 * 查询当前人的任务
+	 * 查询当前流程节点的位置
+	 * act_ru_task 记录当前任务的流程节点
 	 */
 	
 	@Test
 	public void findPersonTask(){
-		String engine="张三";
+		String engine="部门经理";
 		TaskService taskService= processEngine.getTaskService();
 		TaskQuery  taskQuery= taskService.createTaskQuery();
 		taskQuery.taskAssignee(engine);
@@ -93,7 +95,7 @@ public class DeployFlow {
 			 */
 			@Test
 		public  void completeTask(){
-			String taskID="5011";
+			String taskID="20004";
 			TaskService taskService = processEngine.getTaskService();
 			taskService.complete(taskID);
 			System.out.println("成成创建任务ID"+taskID);

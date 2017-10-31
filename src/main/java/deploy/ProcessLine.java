@@ -1,13 +1,12 @@
 package deploy;
 
+import java.util.List;
+
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.ProcessEngines;
-import org.activiti.engine.RepositoryService;
-import org.activiti.engine.RuntimeService;
-import org.activiti.engine.repository.Deployment;
-import org.activiti.engine.repository.DeploymentBuilder;
-import org.activiti.engine.repository.ProcessDefinition;
-import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.TaskService;
+import org.activiti.engine.task.Task;
+import org.activiti.engine.task.TaskQuery;
 import org.junit.Test;
 
 
@@ -18,21 +17,12 @@ import org.junit.Test;
  * @author Administrator
  *
  */
-public class ProcessLine {
+public class ProcessLine extends DeployandDefindProcess {
 	ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
 	
 	@Test
 	public void deployHelloWord() {
-		
-		RepositoryService repositoryService = processEngine.getRepositoryService(); // 创建仓库服务对象
-
-		DeploymentBuilder deploymentBuilder = repositoryService.createDeployment(); // 得到发布构造器
-		deploymentBuilder.name("流程连线");
-		deploymentBuilder.addClasspathResource("diagrams/processConnectLine.bpmn");
-		deploymentBuilder.addClasspathResource("diagrams/processConnectLine.png");
-		Deployment deployment = deploymentBuilder.deploy();
-		System.out.println(deployment.getId());
-		System.out.println(deployment.getName());
+		super.deployHelloWord("流程连线", "diagrams/processConnectLine.bpmn", "diagrams/processConnectLine.png");
 
 	}
 	
@@ -41,15 +31,44 @@ public class ProcessLine {
 	 */
 	@Test
 	public  void runFlowHelloWord(){
-		RuntimeService runtimeService = processEngine.getRuntimeService();
-		ProcessInstance  processInstance = runtimeService.startProcessInstanceByKey("processConnectLine");
-		System.out.println(processInstance.getId());
-		System.out.println(processInstance.getName());
-		
-		RepositoryService  repositoryService = processEngine.getRepositoryService();
-		ProcessDefinition processDefinition = repositoryService.getProcessDefinition(processInstance.getDeploymentId());
-		System.out.println(processDefinition.getId());
-		System.out.println(processDefinition.getName());
+		super.runFlowHelloWord("processConnectLine");
 	}
+	
+	
+	/*
+	 * 流程参数设置
+	 * 通过takeServer或者RunTimeServer
+	 */
+	@Test
+	public void setProcessParam(){
+		try {
+			String processParam="同意";
+			
+			TaskService taskService = super.processEngine.getTaskService();
+			TaskQuery taskQuery = taskService.createTaskQuery();
+			taskQuery.taskAssignee("departmentLeader");
+			List<Task> taskList = taskQuery.list();
+			if((!taskList.isEmpty())&&taskList.size()>0){
+				String taskId = taskList.get(0).getId();
+				System.out.println(taskId);
+				taskService.setVariable(taskId, "message", processParam);
+				//完成该任务ID
+				super.completeTask(taskId);
+				//上面的这两部可以用流程连线来完成效果一样
+			//	taskService.complete(taskId, (Map<String, Object>) new HashMap().put("message", processParam));;
+		
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		//完成任务ID
+		
+		
+		
+	
+		
+		
+	}
+	
 
 }
